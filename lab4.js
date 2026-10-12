@@ -12,38 +12,36 @@
 // ===================================
 // STEP 1: Select DOM Elements
 // ===================================
-// TODO: Select the theme toggle button (id: 'themeToggle')
-const themeToggleBtn = null;
+// select the theme toggle button (id: 'themeToggle')
+const themeToggleBtn = document.getElementById('themeToggle');
 
-// TODO: Select the theme icon element (id: 'themeIcon')
-const themeIcon = null;
+// select the theme icon element (id: 'themeIcon')
+const themeIcon = document.getElementById('themeIcon');
 
-// TODO: Get the <body> element
-const body = null;
+// get the <body> element
+const body = document.body;
 
 
 // ===================================
 // STEP 2: Add Event Listener
 // ===================================
-// TODO: Add a 'click' event listener to the toggle button
-// The event listener should call the toggleDarkMode function
-// Your code here:
+// add a 'click' event listener to the toggle button
+// the event listener calls the toggleDarkMode function
+themeToggleBtn.addEventListener('click', toggleDarkMode);
 
 
 // ===================================
 // STEP 3: Toggle Dark Mode Function
 // ===================================
 function toggleDarkMode() {
-    // TODO 1: Toggle the 'dark-mode' class on the body element
-    // Your code here:
-
-    // TODO 2: Update the icon based on the current mode
-    // Your code here:
+    // toggle the 'dark-mode' class on the body element
+    body.classList.toggle('dark-mode');
     
-    // Optional: Save the current mode to localStorage
-    // This is optional - try it after completing the basic functionality!
-    // Your code here (optional):
-
+    // update the icon based on the current mode
+    updateIcon(body.classList.contains('dark-mode'));
+    
+    // save the current mode to localStorage
+    localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
 }
 
 
@@ -51,13 +49,15 @@ function toggleDarkMode() {
 // STEP 4: Update Icon Function
 // ===================================
 function updateIcon(isDarkMode) {
-    // TODO: Change the icon based on the mode
-    // If dark mode: show sun icon ☀️
-    // If light mode: show moon icon 🌙
-    // Your code here:
+    // if dark mode, show sun icon ☀️
+    if (isDarkMode) {
+        themeIcon.textContent = '☀️';
 
+    // if light mode: show moon icon 🌙
+    } else {
+        themeIcon.textContent = '🌙';
+    }
 }
-
 
 // ===================================
 // Optional: Load Saved Preference
@@ -69,8 +69,17 @@ function loadSavedTheme() {
     // 1. Get the saved theme from localStorage
     // 2. If it exists and is 'dark', add the dark-mode class to body
     // 3. Update the icon accordingly
-    // Your code here:
-
+    
+    // get the saved theme from localStorage
+    const savedTheme = localStorage.getItem('theme');
+    // if it exists and is 'dark', add the dark-mode class to body
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        updateIcon(true);
+    } else {
+        body.classList.remove('dark-mode');
+        updateIcon(false);
+    }
 }
 
 // Call the function when the page loads (uncomment when you implement it)
